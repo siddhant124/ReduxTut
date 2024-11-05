@@ -11,10 +11,10 @@ import {
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
-import {removeItemFromCart} from '../redux/action';
+import {removeItemFromCart} from '../redux/cartSlice';
 
 export default function CartScreen() {
-  const prodCartData = useSelector((state: RootState) => state);
+  const prodCartData = useSelector((state: RootState) => state.cartReducer);
   const dispatch = useDispatch();
   const removeItem = (indexId: any) => {
     dispatch(removeItemFromCart(indexId));
