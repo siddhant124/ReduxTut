@@ -11,14 +11,14 @@ import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Product} from '../type/ProductType';
 import {useDispatch, useSelector} from 'react-redux';
-import {addItemToCart, removeItemFromCart} from '../redux/action';
 import {RootState} from '../redux/store';
+import {addItemToCart, removeItemFromCart} from '../redux/cartSlice';
 
 export default function HomeScreen({navigation}: {navigation: any}) {
   const [prodData, setProdData] = useState<Product[]>([]);
   const dispatch = useDispatch();
 
-  const prodCartData = useSelector((state: RootState) => state);
+  const prodCartData = useSelector((state: RootState) => state.cartReducer);
 
   const addItem = (item: Product) => {
     dispatch(addItemToCart(item));
@@ -83,7 +83,9 @@ export default function HomeScreen({navigation}: {navigation: any}) {
                     alignSelf: 'flex-end', // Wraps width to content
                   }}>
                   <Text>
-                    {prodCartData.some(cartItem => cartItem.id === item.id)
+                    {prodCartData.some(
+                      (cartItem: {id: number}) => cartItem.id === item.id,
+                    )
                       ? 'Remove from cart'
                       : 'Add to cart'}
                   </Text>
